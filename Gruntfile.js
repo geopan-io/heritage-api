@@ -10,7 +10,8 @@ module.exports = function(grunt) {
 
   // Load grunt tasks automatically, when needed
   require('jit-grunt')(grunt, {
-    express: 'grunt-express-server'
+    express: 'grunt-express-server',
+    copy: 'grunt-contrib-copy'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -20,6 +21,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
     // Project settings
     pkg: grunt.file.readJSON('package.json'),
+
+    path: {
+      // configurable paths
+      server: 'server',
+      dist: 'dist'
+    },
+
     env: {
       options: {
         PORT: grunt.option('port') || 9000,
@@ -29,7 +37,8 @@ module.exports = function(grunt) {
       },
       prod: {
         NODE_ENV: 'production'
-      }
+      },
+      all: localConfig
     },
     express: {
       options: {
@@ -37,19 +46,19 @@ module.exports = function(grunt) {
       },
       dev: {
         options: {
-          script: './server/app.js',
+          script: '<%= path.server %>',
           debug: true
         }
       },
       prod: {
         options: {
-          script: './server/app.js'
+          script: '<%= path.dist %>/<%= path.server %>'
         }
       }
     },
     watch: {
       mochaTest: {
-        files: ['./server/**/*.{spec,integration}.js'],
+        files: ['<%= path.server %>/**/*.{spec,integration}.js'],
         tasks: ['env:test', 'mochaTest']
       },
       gruntfile: {
@@ -57,14 +66,14 @@ module.exports = function(grunt) {
       },
       livereload: {
         files: [
-          './server/{app,components}/**/!(*.spec|*.mock).js',
+          '<%= path.server %>/{app,components}/**/!(*.spec|*.mock).js',
         ],
         options: {
           livereload: true
         }
       },
       express: {
-        files: ['./server/**/*.{js,json}'],
+        files: ['<%= path.server %>/**/*.{js,json}'],
         tasks: ['express:dev', 'wait'],
         options: {
           livereload: true,
@@ -83,15 +92,37 @@ module.exports = function(grunt) {
         options: {
           jshintrc: 'jshintrc'
         },
-        src: ['./server/**/!(*.spec|*.integration).js']
+        src: ['<%= path.server %>/**/!(*.spec|*.integration).js']
       },
       serverTest: {
         options: {
           jshintrc: '.jshintrc'
         },
-        src: ['./server/**/*.{spec,integration}.js']
+        src: ['<%= path.server %>/**/*.{spec,integration}.js']
       }
-    }
+    },
+
+    // Empties folders to start fresh
+    clean: {
+      dist: {
+        files: [{
+          dot: true,
+          src: [
+            '.tmp',
+            '<%= path.dist %>'
+          ]
+        }]
+      },
+      server: '.tmp'
+    },
+
+    copy: {
+      dist: {
+        expand: true,
+        src: '<%= path.server %>/**/*',
+        dest: '<%= path.dist %>',
+      },
+    },
 
   });
 
@@ -120,6 +151,7 @@ module.exports = function(grunt) {
     }
 
     grunt.task.run([
+      'env:all',
       'env:dev',
       'express:dev',
       'wait',
@@ -130,6 +162,16 @@ module.exports = function(grunt) {
   grunt.registerTask('server', function() {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
+  });
+
+  grunt.registerTask('build', function() {
+
+    grunt.task.run([
+      'env:all',
+      'env:prod',
+      'copy:dist'
+    ]);
+
   });
 
 };

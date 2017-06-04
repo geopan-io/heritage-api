@@ -7,7 +7,7 @@ module.exports = {
 
   // Sequelize connecton opions
   sequelize: {
-    uri: 'postgres://geopan:30cattanoav@localhost/heritage',
+    uri: process.env.SEQUELIZE_URI,
     options: {
       logging: true,
       dialect: 'postgres',
