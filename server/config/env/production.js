@@ -7,7 +7,7 @@ module.exports = {
 
   // Sequelize connecton opions
   sequelize: {
-      logging: true,
+      logging: false,
       dialect: 'postgres',
       timezone: 'Australia/Sydney',
       username: process.env.PG_USER || 'postgres',
