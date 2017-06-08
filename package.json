@@ -15,7 +15,7 @@
   "scripts": {
     "start": "node server/.",
     "test": "grunt test",
-    "start-prod": "NODE_ENV=production node server/."
+    "start-prod": "npm install && NODE_ENV=production npm start"
   },
   "dependencies": {
     "body-parser": "^1.17.2",
