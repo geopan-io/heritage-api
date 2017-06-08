@@ -13,8 +13,9 @@
     "node": ">=4.0"
   },
   "scripts": {
-    "start": "node ./server/.",
-    "test": "grunt test"
+    "start": "node server/.",
+    "test": "grunt test",
+    "start-prod": "NODE_ENV=production node server/."
   },
   "dependencies": {
     "body-parser": "^1.17.2",
