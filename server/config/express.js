@@ -27,6 +27,19 @@ module.exports = function(app) {
   app.use(cookieParser());
   app.use(helmet());
 
+  app.set('appPath', path.join(config.root, 'client'));
+
+  if ('production' === env) {
+    app.use(express.static(app.get('appPath')));
+    app.use(morgan('dev'));
+  }
+
+  if ('development' === env) {
+    app.use(express.static(app.get('appPath')));
+    app.use(morgan('dev'));
+    app.use(errorHandler()); // Error handler - has to be last
+  }
+
   var jwtCheck = jwt({
     secret: jwks.expressJwtSecret({
       cache: true,
@@ -50,17 +63,4 @@ module.exports = function(app) {
     }
   });
 
-
-  app.set('appPath', path.join(config.root, 'client'));
-
-  if ('production' === env) {
-    app.use(express.static(app.get('appPath')));
-    app.use(morgan('dev'));
-  }
-
-  if ('development' === env) {
-    app.use(express.static(app.get('appPath')));
-    app.use(morgan('dev'));
-    app.use(errorHandler()); // Error handler - has to be last
-  }
 };
