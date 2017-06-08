@@ -1,12 +1,6 @@
 'use strict';
 
 module.exports = function(grunt) {
-  var localConfig;
-  try {
-    localConfig = require('./server/config/local.env');
-  } catch (e) {
-    localConfig = {};
-  }
 
   // Load grunt tasks automatically, when needed
   require('jit-grunt')(grunt, {
@@ -37,8 +31,7 @@ module.exports = function(grunt) {
       },
       prod: {
         NODE_ENV: 'production'
-      },
-      all: localConfig
+      }
     },
     express: {
       options: {
@@ -100,38 +93,14 @@ module.exports = function(grunt) {
         },
         src: ['<%= path.server %>/**/*.{spec,integration}.js']
       }
-    },
-
-    // Empties folders to start fresh
-    clean: {
-      dist: {
-        files: [{
-          dot: true,
-          src: [
-            '.tmp',
-            '<%= path.dist %>'
-          ]
-        }]
-      },
-      server: '.tmp'
-    },
-
-    copy: {
-      dist: {
-        expand: true,
-        src: '<%= path.server %>/**/*',
-        dest: '<%= path.dist %>',
-      },
-    },
+    }
 
   });
 
   // Used for delaying livereload until after server has restarted
   grunt.registerTask('wait', function() {
     grunt.log.ok('Waiting for server reload...');
-
     var done = this.async();
-
     setTimeout(function() {
       grunt.log.writeln('Done waiting!');
       done();
@@ -142,16 +111,8 @@ module.exports = function(grunt) {
     this.async();
   });
 
-  grunt.registerTask('serve', function(target) {
-
-    if (target === 'debug') {
-      return grunt.task.run([
-        'env:all',
-      ]);
-    }
-
+  grunt.registerTask('serve', function() {
     grunt.task.run([
-      'env:all',
       'env:dev',
       'express:dev',
       'wait',
@@ -162,18 +123,6 @@ module.exports = function(grunt) {
   grunt.registerTask('server', function() {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
-  });
-
-  grunt.registerTask('prod', function() {
-
-    grunt.task.run([
-      'env:all',
-      'env:prod',
-      'express:prod',
-      'wait',
-      'watch'
-    ]);
-
   });
 
 };

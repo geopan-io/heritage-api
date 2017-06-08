@@ -8,5 +8,8 @@ if (env === 'development' || env === 'test') {
   require('babel-core/register');
 }
 
+// Run dotenv
+require('dotenv').config();
+
 // Export the application
 exports = module.exports = require('./app');
