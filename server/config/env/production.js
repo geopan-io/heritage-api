@@ -7,12 +7,14 @@ module.exports = {
 
   // Sequelize connecton opions
   sequelize: {
-    uri: process.env.SEQUELIZE_URI,
-    options: {
       logging: true,
       dialect: 'postgres',
-      timezone: 'Australia/Sydney'
-    }
+      timezone: 'Australia/Sydney',
+      username: process.env.PG_USER,
+      password: process.env.PG_PWD,
+      database: process.env.PG_DB,
+      host: process.env.PG_HOST,
+      port:process.env.PG_PORT || 5432
   }
 
 };

@@ -52,7 +52,7 @@ module.exports = function(grunt) {
       },
       prod: {
         options: {
-          script: '<%= path.dist %>/<%= path.server %>'
+          script: '<%= path.server %>'
         }
       }
     },
@@ -164,12 +164,14 @@ module.exports = function(grunt) {
     grunt.task.run(['serve']);
   });
 
-  grunt.registerTask('build', function() {
+  grunt.registerTask('prod', function() {
 
     grunt.task.run([
       'env:all',
       'env:prod',
-      'copy:dist'
+      'express:prod',
+      'wait',
+      'watch'
     ]);
 
   });

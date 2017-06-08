@@ -9,7 +9,7 @@ const Sequelize = require('sequelize');
 
 var db = {
   Sequelize: Sequelize,
-  sequelize: new Sequelize(config.sequelize.uri, config.sequelize.options)
+  sequelize: new Sequelize(config.sequelize)
 };
 
 // Insert models below
