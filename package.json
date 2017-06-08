@@ -18,6 +18,7 @@
     "start-prod": "npm install && NODE_ENV=production npm start"
   },
   "dependencies": {
+    "babel-core": "^6.24.1",
     "body-parser": "^1.17.2",
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",
