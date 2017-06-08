@@ -10,10 +10,10 @@ module.exports = {
       logging: true,
       dialect: 'postgres',
       timezone: 'Australia/Sydney',
-      username: process.env.PG_USER,
-      password: process.env.PG_PWD,
-      database: process.env.PG_DB,
-      host: process.env.PG_HOST,
+      username: process.env.PG_USER || 'postgres',
+      password: process.env.PG_PWD || 'password',
+      database: process.env.PG_DB || 'heritage',
+      host: process.env.PG_HOST || 'localhost',
       port:process.env.PG_PORT || 5432
   }
 
