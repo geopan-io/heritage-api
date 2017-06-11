@@ -1,0 +1,46 @@
+# Group Heritage
+
+Resources related to heritages in the API.
+
+## Heritage Collection [/heritages]
+
+### List All heritages [GET]
+
++ Response 200 (application/json)
+
+            {
+                  "heritages": [
+
+                  ]
+
+            }
+
+
+
+
+## Heritage [/heritages/{heritage_id}]
+
++ Parameters
+    + heritage_id (number)
+
+### View a Heritage Detail [GET]
+
++ Response 200 (application/json)
+
+            {
+                  "heritage": {
+
+                  }
+            }
+
+### Edit a Heritage [PUT]
+
++ Response 200 (text/plain)
+
+        Hello World!
+
+### Delete a Heritage [DELETE]
+Delete a heritage. The current user must be the same user who created the heritage. It
+returns the deleted heritage on success.
+
++ Response 204

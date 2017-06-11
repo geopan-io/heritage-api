@@ -2,8 +2,8 @@
   "name": "heritage-api",
   "version": "0.1.0",
   "description": "Heritage listed area API",
-  "author": "Guillaume de Boyer <guillaume@geopan.io>",
-  "license": "MIT license",
+  "author": "Guillaume de Boyer <gdeboyer@gmail.com>",
+  "license": "Copyright (c) 2017 geopan.io",
   "main": "app.js",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
   "scripts": {
     "start": "node server/.",
     "test": "grunt test",
-    "prod": "npm install && NODE_ENV=production npm start"
+    "prod": "npm install && grunt document && NODE_ENV=production npm start"
   },
   "dependencies": {
     "babel-core": "^6.24.1",
@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "grunt": "^1.0.1",
+    "grunt-aglio": "^0.4.1",
     "grunt-contrib-clean": "^1.1.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",

@@ -27,7 +27,7 @@ module.exports = function(app) {
   app.use(cookieParser());
   app.use(helmet());
 
-  app.set('appPath', path.join(config.root, 'client'));
+  app.set('appPath', path.join(config.root, 'public'));
 
   if ('production' === env) {
     app.use(express.static(app.get('appPath')));
@@ -45,7 +45,7 @@ module.exports = function(app) {
       cache: true,
       rateLimit: true,
       jwksRequestsPerMinute: 5,
-      jwksUri: "https://geopan.auth0.com/.well-known/jwks.json"
+      jwksUri: "https://geopan.au.auth0.com/.well-known/jwks.json"
     }),
     audience: 'heritage.geopan.io',
     issuer: "https://geopan.auth0.com/",

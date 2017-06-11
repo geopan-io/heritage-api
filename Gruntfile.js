@@ -5,7 +5,8 @@ module.exports = function(grunt) {
   // Load grunt tasks automatically, when needed
   require('jit-grunt')(grunt, {
     express: 'grunt-express-server',
-    copy: 'grunt-contrib-copy'
+    copy: 'grunt-contrib-copy',
+    aglio: 'grunt-aglio'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -93,6 +94,15 @@ module.exports = function(grunt) {
         },
         src: ['<%= path.server %>/**/*.{spec,integration}.js']
       }
+    },
+
+    // Documentation using blueprint and aglio
+    aglio: {
+      doc: {
+        files: {
+          "public/index.html": ["apidoc.apib","<%= path.server %>/api/heritage/*.apib"]
+        }
+      }
     }
 
   });
@@ -111,10 +121,13 @@ module.exports = function(grunt) {
     this.async();
   });
 
+  grunt.registerTask('document', ['aglio:doc']);
+
   grunt.registerTask('serve', function() {
     grunt.task.run([
       'env:dev',
       'express:dev',
+      'aglio:doc',
       'wait',
       'watch'
     ]);

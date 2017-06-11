@@ -61,8 +61,9 @@ function removeEntity(res) {
 
 // Gets a list of Heritages
 exports.index = function(req, res) {
-  var limit = req.query.limit || 10;
-  Heritage.findAll({ attributes: { exclude: ['geom'] }, limit: limit })
+  const limit = req.query.limit || 10;
+  const start = req.query.start || 0;
+  Heritage.findAll({ attributes: { exclude: ['geom'] }, limit: limit, offset: start })
     .then(responseWithResult(res))
     .catch(handleError(res));
 };
